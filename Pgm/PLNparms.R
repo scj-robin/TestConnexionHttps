@@ -9,6 +9,7 @@ xtol = 1e-4
 ftol  = 1e-6
 lbvar = 1e-7
 B = 1e2;
+H = 1e3
 n.list = c(100, 500, 30)
 p.list = c(2, 3, 5)
 d.list = c(1, 2, 3)
