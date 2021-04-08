@@ -1,0 +1,58 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsfonts,amsmath,amssymb}
+\usepackage{xcolor,xspace}
+
+\input{../Commands}
+
+\title{Poisson lognormal model: Laplace approximation to evaluate the likelihood}
+\author{PLN team} 
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Laplace approximation} ++++
+
+Suppose we want to evaluate
+$$
+\int \exp(g(x)) \d x, 
+$$
+based on 
+$$
+g(x) \approx g(x^*) - \frac12 (x - x^*)^\intercal H_g(x^*) (x - x^*),
+$$
+where $H_g = -\partial^2_{x^2} g$, the Laplace approximation states that, taking $x^* = \argmax_x g(x)$, 
+$$
+\int \exp(g(x)) \d x \approx (2\pi)^{d/2} |H_g(x^*)|^{-1/2} \exp(g(x^*))
+$$
+
+\section{Application to the PLN model}
+
+Given a parameter $\theta = (\beta, \Sigma)$, we want to evaluate
+$$
+p_\theta(y) = \int \exp(g(x)) \d z
+$$
+where, denoting $\mu = o + x^\intercal \beta$,
+\begin{align*}
+ g(z) 
+ & = \log p_\Sigma(z) + \log p_\beta(Y \mid z) \\
+ & = - \frac{d}2 \log(2\pi) - \frac12 \log|\Sigma| - \frac12 \|z\|^2_{\Sigma^{-1}} - \sum_j e^{\mu_j + z_j} \sum_j y_j(\mu_j + z_j) - \sum_j \log(y_j !) \\
+ \text{so} \qquad \partial_z g(z)
+ & = - z^\intercal \Sigma^{-1} - [e^{\mu_j + z_j}] + y \\
+ \text{ad} \qquad \partial^2_{z^2} g(z)
+ & = - \Sigma^{-1} - \diag[e^{\mu_j + z_j}]
+\end{align*}
+
+Considering a set of $n$ independent sites, we get
+$$
+\log p(Y) \approx - \frac{n}2 \log |\Sigma| - \frac12 \sum_i \log|\Sigma^{-1} + \diag[e^{\mu_j + z^*_j}]| + \sum_{i, j} e^{\mu_{ij} + z^*_{ij}} + y_{ij}(\mu_{ij} + z^*_{ij}) - \log(y_{ij}!)
+$$
+
+
+
+\end{document}
+
